@@ -12,7 +12,9 @@ function downloadMetar(airportCode, callback) {
       let rawData = '';
       res.on('data', (chunk) => { rawData += chunk; });
       res.on('end', () => {
+        console.log('raw data: ' + rawData);
         var metarString = rawData.split('\n')[1]
+        console.log('raw metar: ' + metarString);
         callback(undefined, metarString);
       });
     }
@@ -63,9 +65,12 @@ function getCategoryForStation (stationCode, callback) {
       callback(err);
     } else {
       var decoded = parseMetar(metar);
+      console.log('decoded metar:');
+      console.log(JSON.stringify(decoded, null, 2));
       var ceiling = getMetarCeiling(decoded);
+      console.log('ceiling: ' + ceiling);
       var category = getMetarCategory(ceiling, decoded.visibility);
-
+      console.log('category: ' + category);
       callback(undefined, category);
     }
   });

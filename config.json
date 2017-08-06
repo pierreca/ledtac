@@ -1,9 +1,13 @@
 {
-  "pollingInterval": 300000,
+  "pollingInterval": 1000,
   "stations": [
     {
       "stationCode": "KRNT",
       "i2cAddress": 22
+    },
+    {
+      "stationCode": "KSEA",
+      "i2cAddress": 21
     }
   ] 
 }
