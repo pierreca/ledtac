@@ -1,0 +1,9 @@
+{
+  "pollingInterval": 300000,
+  "stations": [
+    {
+      "stationCode": "KRNT",
+      "i2cAddress": 22
+    }
+  ] 
+}

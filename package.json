@@ -1,0 +1,31 @@
+{
+  "name": "ledtac",
+  "version": "0.0.1",
+  "description": "Gets METAR information and display them using RGB LEDs",
+  "main": "ledtac.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pierreca/ledtac.git"
+  },
+  "keywords": [
+    "led",
+    "tac",
+    "terminal",
+    "area",
+    "chart",
+    "metar"
+  ],
+  "author": "Pierre Cauchois",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pierreca/ledtac/issues"
+  },
+  "homepage": "https://github.com/pierreca/ledtac#readme",
+  "dependencies": {
+    "johnny-five": "^0.11.3",
+    "metar": "^1.0.0"
+  }
+}
