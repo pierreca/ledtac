@@ -1,13 +1,53 @@
 {
-  "pollingInterval": 1000,
+  "pollingInterval": 10000,
   "stations": [
     {
+      "stationCode": "K0S9",
+      "i2cAddress": 9
+    },
+    {
+      "stationCode": "KPAE",
+      "i2cAddress": 10
+    },
+    {
+      "stationCode": "KBFI",
+      "i2cAddress": 11
+    },
+    {
       "stationCode": "KRNT",
-      "i2cAddress": 22
+      "i2cAddress": 12
     },
     {
       "stationCode": "KSEA",
+      "i2cAddress": 13
+    },
+    {
+      "stationCode": "KPWT",
+      "i2cAddress": 14
+    },
+    {
+      "stationCode": "KSHN",
+      "i2cAddress": 17
+    },
+    {
+      "stationCode": "KTIW",
+      "i2cAddress": 18
+    },
+    {
+      "stationCode": "KPLU",
+      "i2cAddress": 19
+    },
+    {
+      "stationCode": "KTCM",
+      "i2cAddress": 20
+    },
+    {
+      "stationCode": "KGRF",
       "i2cAddress": 21
+    },
+    {
+      "stationCode": "KOLM",
+      "i2cAddress": 22
     }
   ] 
 }

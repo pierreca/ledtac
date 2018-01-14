@@ -1,5 +1,6 @@
 'use strict';
 
+var debug = require('debug')('weather');
 var http = require('http');
 var parseMetar = require('metar');
 
@@ -7,14 +8,14 @@ function downloadMetar(airportCode, callback) {
   var url = 'http://tgftp.nws.noaa.gov/data/observations/metar/stations/' + airportCode + '.TXT';
   var req = http.request(url, (res) => {
     if (res.statusCode >= 300) {
-      callback(new Error('could not get METAR for ' + airpotCode));
+      callback(new Error('could not get METAR for ' + airportCode));
     } else {
       let rawData = '';
       res.on('data', (chunk) => { rawData += chunk; });
       res.on('end', () => {
-        console.log('raw data: ' + rawData);
+        debug('raw data: ' + rawData);
         var metarString = rawData.split('\n')[1]
-        console.log('raw metar: ' + metarString);
+        debug('raw metar: ' + metarString);
         callback(undefined, metarString);
       });
     }
@@ -44,7 +45,7 @@ function getMetarCategory(ceiling, visibility) {
   }
 
   if (category === 'unknown') {
-    console.log('could not determine category based on visibility: ' + visibility);
+    debug.log('could not determine category based on visibility: ' + visibility);
   } else {  
     if (ceiling < 500 || category === 'lifr') {
       category = 'lifr';
@@ -65,12 +66,12 @@ function getCategoryForStation (stationCode, callback) {
       callback(err);
     } else {
       var decoded = parseMetar(metar);
-      console.log('decoded metar:');
-      console.log(JSON.stringify(decoded, null, 2));
+      debug('decoded metar:');
+      debug(JSON.stringify(decoded, null, 2));
       var ceiling = getMetarCeiling(decoded);
-      console.log('ceiling: ' + ceiling);
+      debug('ceiling: ' + ceiling);
       var category = getMetarCategory(ceiling, decoded.visibility);
-      console.log('category: ' + category);
+      debug('category: ' + category);
       callback(undefined, category);
     }
   });

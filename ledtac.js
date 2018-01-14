@@ -1,6 +1,7 @@
 'use strict';
 
 var http = require('http');
+var debug = require('debug')('ledtac');
 var five = require('johnny-five');
 var Raspi = require('raspi-io');
 var config = require('./config.json');
@@ -19,8 +20,9 @@ var pi = new five.Board({
 });
 
 pi.on('ready', () => {
-  console.log('Raspberry PI ready');
+  debug('Raspberry PI ready');
   config.stations.forEach((station) => {
+    debug('Creating LED object for ' + station.stationCode + ' with address ' + station.i2cAddress);
     station.led = new five.Led.RGB({
       address: station.i2cAddress,
       controller: "BLINKM"
@@ -28,14 +30,14 @@ pi.on('ready', () => {
   });
 
   setInterval(() => {
-    console.log('Getting weather...');
+    debug('Getting weather...');
     config.stations.forEach((station) => {
-      console.log(station);
+      debug('... for ' + station.stationCode);
       weather.getCategoryForStation(station.stationCode, (err, category) => {
         if (err) {
-          console.error(err.toString());
+          debug(err.toString());
         } else {
-          console.log(station.stationCode + ' is ' + category);
+          debug(station.stationCode + ' is ' + category + ': setting color to ' + categoryColor[category]);
           station.led.color(categoryColor[category]);
         }
       });
