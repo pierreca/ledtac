@@ -1,13 +1,12 @@
 'use strict';
 
-var http = require('http');
-var debug = require('debug')('ledtac');
-var five = require('johnny-five');
-var Raspi = require('raspi-io');
-var config = require('./config.json');
-var weather = require('./weather');
+const debug = require('debug')('ledtac');
+const isPi = require('detect-rpi');
+const config = require('./config.json');
+const weather = require('./weather');
+const Hardware = isPi() ? require('./hardware/hal_pi_blinkm') : require('./hardware/hal_simulated');
 
-var categoryColor = {
+const categoryColor = {
   lifr: 'FF69B4',
   ifr: 'FF0000',
   mvfr: '0000FF',
@@ -15,19 +14,10 @@ var categoryColor = {
   unknown: '000000'
 };
 
-var pi = new five.Board({
-  io: new Raspi()
-});
-
-pi.on('ready', () => {
-  debug('Raspberry PI ready');
-  config.stations.forEach((station) => {
-    debug('Creating LED object for ' + station.stationCode + ' with address ' + station.i2cAddress);
-    station.led = new five.Led.RGB({
-      address: station.i2cAddress,
-      controller: "BLINKM"
-    });
-  });
+const hardware = new Hardware();
+hardware.on('ready', () => {
+  debug('Hardware ready.');
+  hardware.initializeLEDs(config.stations.map((station => station.i2cAddress)));
 
   setInterval(() => {
     debug('Getting weather...');
@@ -36,11 +26,12 @@ pi.on('ready', () => {
       weather.getCategoryForStation(station.stationCode, (err, category) => {
         if (err) {
           debug(err.toString());
+          hardware.setLEDColor(station.i2cAddress, categoryColor['unknown']);
         } else {
           debug(station.stationCode + ' is ' + category + ': setting color to ' + categoryColor[category]);
-          station.led.color(categoryColor[category]);
+          hardware.setLEDColor(station.i2cAddress, categoryColor[category]);
         }
       });
     });
-  }, config.pollingInterval)
+  }, config.pollingInterval);
 });

@@ -1,5 +1,5 @@
 {
-  "pollingInterval": 10000,
+  "pollingInterval": 120000,
   "stations": [
     {
       "stationCode": "K0S9",
@@ -49,5 +49,5 @@
       "stationCode": "KOLM",
       "i2cAddress": 22
     }
-  ] 
+  ]
 }
