@@ -51,6 +51,10 @@ describe('metar_interpreter', () => {
     {
       metarString: 'KAWO 210356Z AUTO 13018G25KT 10SM OVC042 08/03 A2996 RMK AO2 PK WND 12027/0304 SLP149 T00830028',
       expectedCategory: 'vfr'
+    },
+    {
+      metarString: 'KAWO 210356Z AUTO 13018G25KT 10SM SKC 08/03 A2996 RMK AO2 PK WND 12027/0304 SLP149 T00830028',
+      expectedCategory: 'vfr'
     }
   ].forEach((testConfig) => {
     it('returns ' + testConfig.expectedCategory + ' for ' + testConfig.metarString, () => {

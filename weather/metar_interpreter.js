@@ -8,14 +8,18 @@ module.exports.getCategory = function (metarString) {
   debug('decoded metar:');
   debug(JSON.stringify(decoded, null, 2));
 
-  let ceiling = 9999;
-  decoded.clouds.forEach((layer) => {
-    if (layer.abbreviation === 'BKN' || layer.abbreviation === 'OVC') {
-      if (layer.altitude < ceiling) {
-        ceiling = layer.altitude;
+  let ceiling = 999999;
+  if(decoded.clouds) {
+    decoded.clouds.forEach((layer) => {
+      if (layer.abbreviation === 'BKN' || layer.abbreviation === 'OVC') {
+        if (layer.altitude < ceiling) {
+          ceiling = layer.altitude;
+        }
       }
-    }
-  });
+    });
+  } else {
+    console.error('could not decode ceiling: ' + metarString);
+  }
   debug('ceiling: ' + ceiling);
 
   let category;
