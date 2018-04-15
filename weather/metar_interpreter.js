@@ -1,7 +1,7 @@
 'use strict';
 
 const debug = require('debug')('metar_interpreter');
-const parseMetar = require('metar');
+const parseMetar = require('@pierreca/metar');
 
 module.exports.getCategory = function (metarString) {
   const decoded = parseMetar(metarString);
